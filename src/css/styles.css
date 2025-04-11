@@ -16,3 +16,111 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+
+
+.form {
+  display: flex;
+  justify-content: center;
+  margin: 30px auto;
+  gap: 10px;
+}
+
+.form input[type="text"] {
+  padding: 10px 15px;
+  font-size: 16px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form button {
+  padding: 10px 20px;
+  background-color: #3f75f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+  background-color: #2f5ed9;
+}
+
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0 30px 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-item {
+  border: 1px solid #d1d1d1;
+  background-color: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: scale(1.01);
+}
+
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.gallery-info {
+  display: flex;
+  justify-content: space-around;
+  font-size: 14px;
+  padding: 10px;
+  background-color: #f8f8f8;
+}
+
+.gallery-info span {
+  display: block;
+  text-align: center;
+}
+
+
+
+
+.load-more {
+  padding: 10px 20px;
+  background-color: #3f75f6; 
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 20px auto;
+  display: block; 
+  text-align: center; 
+  width: 150px;
+}
+
+.load-more:hover {
+  background-color: #2f5ed9; 
+}
+
+
+.loader {
+  display: none;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #3f75f6; 
+}
+
+.loader.visible {
+  display: block;
+}
+
