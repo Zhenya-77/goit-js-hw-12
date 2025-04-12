@@ -1,8 +1,14 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import { getImagesByQuery } from "./js/pixabay-api.js";
-import { createGallery, clearGallery, showLoader, hideLoader, showLoadMoreButton, hideLoadMoreButton } from "./js/render-functions.js";
-
+import { 
+  createGallery, 
+  clearGallery, 
+  showLoader, 
+  hideLoader, 
+  showLoadMoreButton, 
+  hideLoadMoreButton 
+} from "./js/render-functions.js";
 
 let currentPage = 1;
 let currentSearchQuery = '';
@@ -10,7 +16,7 @@ let totalHits = 0;
 
 const form = document.querySelector('.form');
 const loadMoreButton = document.querySelector('.load-more');
-
+hideLoadMoreButton(); 
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -22,9 +28,10 @@ form.addEventListener('submit', async (e) => {
   }
 
   currentSearchQuery = searchText;
-  currentPage = 1;  
-  clearGallery();    
-  showLoader();      
+  currentPage = 1;
+  clearGallery();
+  hideLoadMoreButton();
+  showLoader();
 
   try {
     const data = await getImagesByQuery(currentSearchQuery, currentPage);
@@ -34,15 +41,15 @@ form.addEventListener('submit', async (e) => {
     } else {
       createGallery(data.hits);
       totalHits = data.totalHits;
-      checkLoadMoreButton();
+      checkLoadMoreButton(data.hits.length); 
     }
   } catch (error) {
+    console.error("Fetch error during submit:", error); 
     iziToast.error({ message: "Error fetching images.", position: 'topRight' });
   } finally {
     hideLoader();
   }
 });
-
 
 loadMoreButton.addEventListener('click', async () => {
   currentPage += 1;
@@ -52,11 +59,11 @@ loadMoreButton.addEventListener('click', async () => {
     const data = await getImagesByQuery(currentSearchQuery, currentPage);
     
     createGallery(data.hits);
-    totalHits = data.totalHits;
-    checkLoadMoreButton();
+    checkLoadMoreButton(data.hits.length); 
 
-    smoothScroll();  
+    smoothScroll(); 
   } catch (error) {
+    console.error("Fetch error during load more:", error); 
     iziToast.error({ message: "Error fetching images.", position: 'topRight' });
   } finally {
     hideLoader();
@@ -64,8 +71,10 @@ loadMoreButton.addEventListener('click', async () => {
 });
 
 
-function checkLoadMoreButton() {
-  if (galleryContainer.children.length >= totalHits) {
+function checkLoadMoreButton(loadedImagesCount) {
+  const totalRendered = document.querySelectorAll('.gallery-item').length;
+
+  if (totalRendered >= totalHits || loadedImagesCount < 15) {
     hideLoadMoreButton();
     iziToast.info({ message: "You've reached the end of the results.", position: 'topRight' });
   } else {
@@ -75,9 +84,13 @@ function checkLoadMoreButton() {
 
 
 function smoothScroll() {
-  const cardHeight = document.querySelector('.gallery-item').getBoundingClientRect().height;
+  const firstCard = document.querySelector('.gallery-item');
+  if (!firstCard) return;
+
+  const cardHeight = firstCard.getBoundingClientRect().height;
+
   window.scrollBy({
-    top: cardHeight * 2,  
+    top: cardHeight * 2,
     behavior: 'smooth'
   });
 }
