@@ -18,6 +18,7 @@
 @import url('./footer.css');
 
 
+/* Стилі форми */
 .form {
   display: flex;
   justify-content: center;
@@ -48,7 +49,7 @@
   background-color: #2f5ed9;
 }
 
-
+/* Галерея */
 .gallery {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -76,25 +77,16 @@
   height: auto;
 }
 
-.gallery-info {
-  display: flex;
-  justify-content: space-around;
-  font-size: 14px;
+.info {
   padding: 10px;
+  font-size: 14px;
   background-color: #f8f8f8;
 }
 
-.gallery-info span {
-  display: block;
-  text-align: center;
-}
-
-
-
-
+/* Кнопка Load more */
 .load-more {
   padding: 10px 20px;
-  background-color: #3f75f6; 
+  background-color: #3f75f6;
   color: white;
   border: none;
   border-radius: 4px;
@@ -102,25 +94,25 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin: 20px auto;
-  display: block; 
-  text-align: center; 
+  display: block;
   width: 150px;
 }
 
 .load-more:hover {
-  background-color: #2f5ed9; 
+  background-color: #2f5ed9;
 }
 
-
+/* Лоадер */
 .loader {
   display: none;
   text-align: center;
   font-size: 18px;
   font-weight: bold;
-  color: #3f75f6; 
+  color: #3f75f6;
+  margin: 20px auto;
 }
 
-.loader.visible {
-  display: block;
+.hidden {
+  display: none !important;
 }
 

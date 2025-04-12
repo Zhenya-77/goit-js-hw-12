@@ -1,13 +1,13 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import { getImagesByQuery } from "./js/pixabay-api.js";
-import { 
-  createGallery, 
-  clearGallery, 
-  showLoader, 
-  hideLoader, 
-  showLoadMoreButton, 
-  hideLoadMoreButton 
+import {
+  createGallery,
+  clearGallery,
+  showLoader,
+  hideLoader,
+  showLoadMoreButton,
+  hideLoadMoreButton,
 } from "./js/render-functions.js";
 
 let currentPage = 1;
@@ -16,7 +16,8 @@ let totalHits = 0;
 
 const form = document.querySelector('.form');
 const loadMoreButton = document.querySelector('.load-more');
-hideLoadMoreButton(); 
+
+hideLoadMoreButton(); // Ховаємо одразу при завантаженні
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -41,10 +42,10 @@ form.addEventListener('submit', async (e) => {
     } else {
       createGallery(data.hits);
       totalHits = data.totalHits;
-      checkLoadMoreButton(data.hits.length); 
+      checkLoadMoreButton(data.hits.length);
     }
   } catch (error) {
-    console.error("Fetch error during submit:", error); 
+    console.error("Fetch error:", error);
     iziToast.error({ message: "Error fetching images.", position: 'topRight' });
   } finally {
     hideLoader();
@@ -57,19 +58,17 @@ loadMoreButton.addEventListener('click', async () => {
 
   try {
     const data = await getImagesByQuery(currentSearchQuery, currentPage);
-    
-    createGallery(data.hits);
-    checkLoadMoreButton(data.hits.length); 
 
-    smoothScroll(); 
+    createGallery(data.hits);
+    checkLoadMoreButton(data.hits.length);
+    smoothScroll();
   } catch (error) {
-    console.error("Fetch error during load more:", error); 
+    console.error("Fetch error during load more:", error);
     iziToast.error({ message: "Error fetching images.", position: 'topRight' });
   } finally {
     hideLoader();
   }
 });
-
 
 function checkLoadMoreButton(loadedImagesCount) {
   const totalRendered = document.querySelectorAll('.gallery-item').length;
@@ -82,15 +81,13 @@ function checkLoadMoreButton(loadedImagesCount) {
   }
 }
 
-
 function smoothScroll() {
   const firstCard = document.querySelector('.gallery-item');
   if (!firstCard) return;
 
   const cardHeight = firstCard.getBoundingClientRect().height;
-
   window.scrollBy({
     top: cardHeight * 2,
-    behavior: 'smooth'
+    behavior: 'smooth',
   });
 }
